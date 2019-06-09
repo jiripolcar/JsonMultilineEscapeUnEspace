@@ -12,18 +12,24 @@ function activate(context) {
                 if (betweenQuotes[i].includes('\n')) {
                     var entry = betweenQuotes[i].split('\n');
                     betweenQuotes[i] = "";
+                    lines++;
                     for (var j = 0; j < entry.length; j++) {
-                        betweenQuotes[i] += entry[j] + "\\n";
+                        betweenQuotes[i] += entry[j];
+                        if (j < entry.length - 1) {
+                            betweenQuotes[i] += "\\n";
+                        }
                     }
-                    betweenQuotes[i] = betweenQuotes[i].substring(0, betweenQuotes[i].length - 2);
+                    betweenQuotes[i] = betweenQuotes[i];
                 }
             }
             var result = betweenQuotes[0];
-            for (var i = 1; i < betweenQuotes.length; i++)
+            for (i = 1; i < betweenQuotes.length; i++) {
                 result += "\"" + betweenQuotes[i];
+            }
             vscode.window.activeTextEditor.edit(editBuilder => {
-                if (!vscode.window.activeTextEditor)
+                if (!vscode.window.activeTextEditor) {
                     return;
+                }
                 editBuilder.replace(new vscode.Range(0, 0, vscode.window.activeTextEditor.document.lineCount, 0), result);
             });
             vscode.window.showInformationMessage("Escaped " + lines + " lines");
@@ -37,19 +43,25 @@ function activate(context) {
             for (var i = 1; i < betweenQuotes.length; i = i + 2) {
                 if (betweenQuotes[i].includes('\\n')) {
                     var entry = betweenQuotes[i].split('\\n');
+                    lines++;
                     betweenQuotes[i] = "";
                     for (var j = 0; j < entry.length; j++) {
-                        betweenQuotes[i] += entry[j] + "\n";
+                        betweenQuotes[i] += entry[j];
+                        if (j < entry.length - 1) {
+                            betweenQuotes[i] += "\n";
+                        }
                     }
-                    betweenQuotes[i] = betweenQuotes[i].substring(0, betweenQuotes[i].length - 2);
+                    betweenQuotes[i] = betweenQuotes[i];
                 }
             }
             var result = betweenQuotes[0];
-            for (var i = 1; i < betweenQuotes.length; i++)
+            for (i = 1; i < betweenQuotes.length; i++) {
                 result += "\"" + betweenQuotes[i];
+            }
             vscode.window.activeTextEditor.edit(editBuilder => {
-                if (!vscode.window.activeTextEditor)
+                if (!vscode.window.activeTextEditor) {
                     return;
+                }
                 editBuilder.replace(new vscode.Range(0, 0, vscode.window.activeTextEditor.document.lineCount, 0), result);
             });
             vscode.window.showInformationMessage("UnEscaped " + lines + " lines");
