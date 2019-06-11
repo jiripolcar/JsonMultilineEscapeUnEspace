@@ -10,16 +10,8 @@ function activate(context) {
             var betweenQuotes = json.split('\"');
             for (var i = 1; i < betweenQuotes.length; i = i + 2) {
                 if (betweenQuotes[i].includes('\n')) {
-                    var entry = betweenQuotes[i].split('\n');
-                    betweenQuotes[i] = "";
                     lines++;
-                    for (var j = 0; j < entry.length; j++) {
-                        betweenQuotes[i] += entry[j];
-                        if (j < entry.length - 1) {
-                            betweenQuotes[i] += "\\n";
-                        }
-                    }
-                    betweenQuotes[i] = betweenQuotes[i];
+                    betweenQuotes[i] = betweenQuotes[i].replace(/\n/g, '\\n');
                 }
             }
             var result = betweenQuotes[0];
@@ -32,7 +24,7 @@ function activate(context) {
                 }
                 editBuilder.replace(new vscode.Range(0, 0, vscode.window.activeTextEditor.document.lineCount, 0), result);
             });
-            vscode.window.showInformationMessage("Escaped " + lines + " lines");
+            vscode.window.showInformationMessage("Escaped " + lines + " values");
         }
     });
     let disposableUnEscape = vscode.commands.registerCommand('extension.jsonMultilineUnEscape', () => {
@@ -41,18 +33,8 @@ function activate(context) {
             var json = vscode.window.activeTextEditor.document.getText();
             var betweenQuotes = json.split('\"');
             for (var i = 1; i < betweenQuotes.length; i = i + 2) {
-                if (betweenQuotes[i].includes('\\n')) {
-                    var entry = betweenQuotes[i].split('\\n');
-                    lines++;
-                    betweenQuotes[i] = "";
-                    for (var j = 0; j < entry.length; j++) {
-                        betweenQuotes[i] += entry[j];
-                        if (j < entry.length - 1) {
-                            betweenQuotes[i] += "\n";
-                        }
-                    }
-                    betweenQuotes[i] = betweenQuotes[i];
-                }
+                lines++;
+                betweenQuotes[i] = betweenQuotes[i].replace(/\\n/g, '\n');
             }
             var result = betweenQuotes[0];
             for (i = 1; i < betweenQuotes.length; i++) {

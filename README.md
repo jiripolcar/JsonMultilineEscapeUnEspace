@@ -39,6 +39,10 @@ No other extensions required.
 
 ## Release Notes
 
+### 0.1.2
+
+* Internal algorithm change.
+
 ### 0.1.1
 
 * Fixed an error that lost the last character in affected string values in certain situations and made the functionality mroe robust.

@@ -2,7 +2,7 @@
 	"name": "jsonmultilineescunesc",
 	"displayName": "JSON Multiline Escaper & Unespacer",
 	"description": "Replaces //n with ////n and vice versa",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"engines": {
 		"vscode": "^1.35.0"
 	},
